@@ -21,7 +21,7 @@ class Constants
 	const DOMAIN_PATH = '/languages/';
 
 	// WP Stuffs
-	const PLUGIN_DOWNLOAD_URL = 'https://github.com/Groot-Made/Connector/releases/download/latest-stable/grootmade-connector.zip';
+	const PLUGIN_DOWNLOAD_URL = 'https://github.com/Groot-Made/Connector/blob/stable/grootmade-connector.zip';
 	const PLUGIN_INFO_URL = 'https://raw.githubusercontent.com/Groot-Made/Connector/stable/info.json';
 	const ADMIN_MENU_TITLE = 'GrootMade Connector';
 	const ACTIVATION_KEY = 'grootmade_connector_activation';
@@ -36,7 +36,7 @@ class Constants
 	const WHITELABEL = 0;
 
 	// Engine Details
-	const ENGINE_URL = 'https://api.grootmade.com';
+	const ENGINE_URL = 'https://engine.grootmade.com';
 	const MAIN_SITE = 'https://grootmade.com';
 
 	// Typesense Setting
