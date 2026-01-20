@@ -1,9 +1,9 @@
 <?php
 
-namespace GrootMade\\Connector;
+namespace GrootMade\Connector;
 
-use GrootMade\\Connector\\Connector\Connector\exceptions\ItemDetailErrorException;
-use GrootMade\\Connector\\Connector\Connector\exceptions\ItemDownloadDetailException;
+use GrootMade\Connector\Connector\Connector\Connector\Connector\Connector\Connector\Connector\\Connector\\Connector\Connector\exceptions\ItemDetailErrorException;
+use GrootMade\Connector\Connector\Connector\Connector\Connector\Connector\Connector\Connector\\Connector\\Connector\Connector\exceptions\ItemDownloadDetailException;
 
 class AutoUpdate
 {

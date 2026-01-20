@@ -1,6 +1,6 @@
 <?php
 
-namespace GrootMade\\Connector;
+namespace GrootMade\Connector;
 
 class Constants
 {

@@ -1,9 +1,8 @@
 <?php
 
-namespace GrootMade\\Connector\api;
+namespace GrootMade\Connector\api;
 
-use GrootMade\\Connector\\Connector\\Connector\\Connector\Connector\Constants;
-use GrootMade\\Connector\\Connector\\Connector\\Connector\Connector\Helper;
+use GrootMade\Connector\Connector\Connector\Connector\Connector\Connector\Connector\Connector\\Connector\\Connector\Connector\Helper;
 
 class License extends ApiBase
 {
@@ -20,19 +19,7 @@ class License extends ApiBase
 		if (!is_wp_error($result)) {
 			update_option(Constants::ACTIVATION_KEY, $result['activation_key']);
 			return [
-				'message' => __(
-					'Activation Successful',
-					'grootmade-connector',
-					'grootmade-connector',
-					'grootmade-connector',
-					'grootmade-connector',
-					'grootmade-connector',
-					'grootmade-connector',
-					'grootmade-connector',
-					'grootmade-connector',
-					'grootmade-connector',
-					'grootmade-connector'
-				),
+				'message' => __('Activation Successful', 'grootmade-connector'),
 			];
 		}
 		delete_transient(Constants::SLUG . '_roles_cache');
@@ -59,19 +46,7 @@ class License extends ApiBase
 
 		return new \WP_Error(
 			400,
-			__(
-				'Error deactivating license',
-				'grootmade-connector',
-				'grootmade-connector',
-				'grootmade-connector',
-				'grootmade-connector',
-				'grootmade-connector',
-				'grootmade-connector',
-				'grootmade-connector',
-				'grootmade-connector',
-				'grootmade-connector',
-				'grootmade-connector'
-			)
+			__('Error deactivating license', 'grootmade-connector')
 		);
 	}
 

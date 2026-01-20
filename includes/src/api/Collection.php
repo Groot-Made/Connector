@@ -1,8 +1,8 @@
 <?php
 
-namespace GrootMade\\Connector\api;
+namespace GrootMade\Connector\api;
 
-use GrootMade\\Connector\\Connector\Connector\Helper;
+use GrootMade\Connector\Connector\Connector\Connector\Connector\Connector\Connector\Connector\\Connector\\Connector\Connector\Helper;
 
 class Collection extends ApiBase
 {

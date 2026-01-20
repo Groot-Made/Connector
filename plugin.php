@@ -3,7 +3,7 @@
  * Plugin Name: GrootMade Connector
  * Plugin URI: https://grootmade.com
  * Description: GrootMade Connector plugin for WordPress.
- * Version: 1.0.1768917427
+ * Version: 1.0.1768917734
  * Requires at Least: 6.0
  * Requires PHP: 7.4
  * Author: GrootMade
@@ -12,7 +12,7 @@
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: grootmade-connector
  **/
-namespace GrootMade\\Connector {
+namespace GrootMade\Connector {
 	if (file_exists(__DIR__ . '/includes/lib/autoload.php')) {
 		require_once __DIR__ . '/includes/lib/autoload.php';
 		Plugin::get_instance(__FILE__);
