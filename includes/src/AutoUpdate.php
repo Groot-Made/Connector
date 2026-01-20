@@ -2,8 +2,8 @@
 
 namespace GrootMade\Connector;
 
-use GrootMade\Connector\Connector\Connector\Connector\Connector\Connector\Connector\Connector\Connector\Connector\\Connector\\Connector\Connector\exceptions\ItemDetailErrorException;
-use GrootMade\Connector\Connector\Connector\Connector\Connector\Connector\Connector\Connector\Connector\Connector\\Connector\\Connector\Connector\exceptions\ItemDownloadDetailException;
+use GrootMade\Connector\exceptions\ItemDetailErrorException;
+use GrootMade\Connector\exceptions\ItemDownloadDetailException;
 
 class AutoUpdate
 {
