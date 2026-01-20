@@ -2,7 +2,7 @@
 
 namespace GrootMade\Connector;
 
-use GrootMade\Connector\Connector\Connector\api\{
+use GrootMade\Connector\api\{
 	Announcement,
 	ApiBase,
 	Collection,

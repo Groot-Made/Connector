@@ -2,7 +2,10 @@
 
 namespace GrootMade\Connector\api;
 
-use GrootMade\Connector\Connector\Connector\{Constants, Helper};
+use GrootMade\Connector\Connector\Connector\Connector\Connector\{
+	Constants,
+	Helper
+};
 
 class Update extends ApiBase
 {

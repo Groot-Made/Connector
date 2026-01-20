@@ -2,8 +2,12 @@
 
 namespace GrootMade\Connector\api;
 
-use GrootMade\Connector\Connector\Connector\{Constants, Helper, Installer};
-use GrootMade\Connector\Connector\Connector\exceptions\ItemDetailErrorException;
+use GrootMade\Connector\Connector\Connector\Connector\Connector\{
+	Constants,
+	Helper,
+	Installer
+};
+use GrootMade\Connector\Connector\Connector\Connector\Connector\exceptions\ItemDetailErrorException;
 
 class Item extends ApiBase
 {

@@ -2,7 +2,7 @@
 
 namespace GrootMade\Connector\api;
 
-use GrootMade\Connector\Connector\Connector\Connector\Connector\Connector\Connector\Connector\\Connector\\Connector\Connector\Constants;
+use GrootMade\Connector\Connector\Connector\Connector\Connector\Connector\Connector\Connector\Connector\Connector\\Connector\\Connector\Connector\Constants;
 
 abstract class ApiBase
 {

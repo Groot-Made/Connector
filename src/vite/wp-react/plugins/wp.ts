@@ -46,7 +46,10 @@ export default function WPEnvProcess({
 				/namespace\s+(.+)?;/gi,
 				'namespace ' + chunks.join('\\') + ';'
 			)
-			.replace(/^use\s+([0-9a-zA-Z_]+)/gm, 'use ' + env.NAMESPACE);
+			.replace(
+				/^use\s+(?!GrootMade)([0-9a-zA-Z_]+)/gm,
+				'use ' + env.NAMESPACE + '\\$1'
+			);
 	};
 	const replaceTextdomain = (content: string, textdomain: string) => {
 		const pattern =
