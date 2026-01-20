@@ -7,6 +7,9 @@ env:
     RELEASE_BRANCH: beta-release
     ENV_FILE: .env.beta
     CROWDIN_YML: crowdin.github.yml
+    # Change this to the target repository (format: username/repo or org/repo)
+    # Leave empty to use current repository
+    TARGET_REPOSITORY: ${{ secrets.RELEASE_TARGET_REPOSITORY || github.repository }}
 jobs:
     deploy:
         name: Release
@@ -54,7 +57,7 @@ jobs:
                   push_translations: false
                   skip_untranslated_strings: true
               env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  GITHUB_TOKEN: ${{ secrets.RELEASE_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
                   CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
                   CROWDIN_API_TOKEN: ${{ secrets.CROWDIN_API_TOKEN }}
             - name: Make JSON from PO Files
@@ -64,8 +67,8 @@ jobs:
             - name: Release ZIP
               uses: s0/git-publish-subdir-action@develop
               env:
-                  REPO: self
+                  REPO: ${{ env.TARGET_REPOSITORY != github.repository && env.TARGET_REPOSITORY || 'self' }}
                   BRANCH: ${{ env.RELEASE_BRANCH }}
                   FOLDER: dist
                   SQUASH_HISTORY: true
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  GITHUB_TOKEN: ${{ secrets.RELEASE_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
