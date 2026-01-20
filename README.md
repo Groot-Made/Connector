@@ -8,7 +8,7 @@ GrootMade Connector helps you unlock unlimited themes and plugins with GrootMade
 
 ## 📥 Quick Download
 
-- **🎯 Latest Stable Build**: [Download grootmade-connector.zip](https://raw.githubusercontent.com/Groot-Made/Connector/stable/grootmade-connector.zip) (auto-updated from `main`)
+- **🎯 Latest Stable Build**: [Download grootmade-connector.zip](https://github.com/Groot-Made/Connector/releases/download/latest-stable/grootmade-connector.zip) (always points to the latest stable release)
 
 See all tagged releases on the [Releases page](https://github.com/Groot-Made/Connector/releases)
 

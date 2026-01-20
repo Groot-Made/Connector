@@ -41,8 +41,10 @@ jobs:
             - name: Build Scripts
               run: npm run build
             - name: Setup Crowdin file
+              if: ${{ secrets.CROWDIN_PROJECT_ID != '' && secrets.CROWDIN_API_TOKEN != '' }}
               run: cp ${{ env.CROWDIN_YML }} crowdin.yml
             - name: Upload translations to Crowdin
+              if: ${{ secrets.CROWDIN_PROJECT_ID != '' && secrets.CROWDIN_API_TOKEN != '' }}
               uses: crowdin/github-action@v2.1.3
               with:
                   upload_sources: true
