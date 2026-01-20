@@ -41,15 +41,10 @@ export default function WPEnvProcess({
 		if (dir.length > 0) {
 			chunks.push(dir);
 		}
-		return content
-			.replace(
-				/namespace\s+(.+)?;/gi,
-				'namespace ' + chunks.join('\\') + ';'
-			)
-			.replace(
-				/^use\s+(?!GrootMade)([0-9a-zA-Z_]+)/gm,
-				'use ' + env.NAMESPACE + '\\$1'
-			);
+		return content.replace(
+			/namespace\s+(.+)?;/gi,
+			'namespace ' + chunks.join('\\') + ';'
+		);
 	};
 	const replaceTextdomain = (content: string, textdomain: string) => {
 		const pattern =
@@ -111,7 +106,7 @@ export default function WPEnvProcess({
 			});
 			fileContent = fileContent.replace(
 				/namespace\s+(.+)?{/gi,
-				'namespace ' + env.NAMESPACE + ' {'
+				'namespace ' + (env.NAMESPACE || '') + ' {'
 			);
 			writeFileSync(filePath, fileContent, 'utf8');
 		} else {
