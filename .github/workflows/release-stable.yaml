@@ -99,6 +99,7 @@ jobs:
                   files: dist/grootmade-connector.zip
                   draft: false
                   prerelease: false
+                  overwrite: true
               env:
                   GITHUB_TOKEN: ${{ secrets.RELEASE_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
             - name: Update latest-stable tag and release
@@ -113,6 +114,14 @@ jobs:
                   git push origin latest-stable --force
               env:
                   GITHUB_TOKEN: ${{ secrets.RELEASE_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
+            - name: Verify release file exists
+              run: |
+                  if [ ! -f "dist/grootmade-connector.zip" ]; then
+                    echo "Error: dist/grootmade-connector.zip not found!"
+                    ls -la dist/ || echo "dist directory does not exist"
+                    exit 1
+                  fi
+                  echo "Release file exists: $(ls -lh dist/grootmade-connector.zip)"
             - name: Create/Update latest-stable Release
               uses: softprops/action-gh-release@v1
               with:
@@ -125,6 +134,7 @@ jobs:
                   files: dist/grootmade-connector.zip
                   draft: false
                   prerelease: false
+                  overwrite: true
               env:
                   GITHUB_TOKEN: ${{ secrets.RELEASE_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
             - name: Update latest tag
@@ -139,6 +149,13 @@ jobs:
                   git push origin latest --force
               env:
                   GITHUB_TOKEN: ${{ secrets.RELEASE_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
+            - name: Verify connector.zip exists
+              run: |
+                  if [ ! -f "dist/connector.zip" ]; then
+                    echo "Error: dist/connector.zip not found!"
+                    exit 1
+                  fi
+                  echo "connector.zip exists: $(ls -lh dist/connector.zip)"
             - name: Create/Update latest Release
               uses: softprops/action-gh-release@v1
               with:
@@ -155,6 +172,7 @@ jobs:
                       dist/connector.zip
                   draft: false
                   prerelease: false
+                  overwrite: true
               env:
                   GITHUB_TOKEN: ${{ secrets.RELEASE_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
             - name: Release ZIP to Branch
