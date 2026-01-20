@@ -7,21 +7,13 @@ env:
     RELEASE_BRANCH: stable
     ENV_FILE: .env.stable
     CROWDIN_YML: crowdin.github.yml
-    # Change this to the target repository (format: username/repo or org/repo)
-    # Leave empty to use current repository
-    TARGET_REPOSITORY: ${{ secrets.RELEASE_TARGET_REPOSITORY || github.repository }}
 jobs:
     deploy:
         name: Release
         runs-on: ubuntu-latest
-        permissions:
-            contents: write
-            actions: read
         steps:
             - name: Checkout repository
               uses: actions/checkout@v4
-              with:
-                  fetch-depth: 0
             - name: Setup Node
               uses: actions/setup-node@v4
               with:
@@ -48,19 +40,9 @@ jobs:
               run: composer install --no-interaction --prefer-dist --optimize-autoloader
             - name: Build Scripts
               run: npm run build
-            - name: Check Crowdin secrets
-              id: check-crowdin
-              run: |
-                  if [ -n "${{ secrets.CROWDIN_PROJECT_ID }}" ] && [ -n "${{ secrets.CROWDIN_API_TOKEN }}" ]; then
-                    echo "has_secrets=true" >> $GITHUB_OUTPUT
-                  else
-                    echo "has_secrets=false" >> $GITHUB_OUTPUT
-                  fi
             - name: Setup Crowdin file
-              if: steps.check-crowdin.outputs.has_secrets == 'true'
               run: cp ${{ env.CROWDIN_YML }} crowdin.yml
             - name: Upload translations to Crowdin
-              if: steps.check-crowdin.outputs.has_secrets == 'true'
               uses: crowdin/github-action@v2.1.3
               with:
                   upload_sources: true
@@ -70,116 +52,18 @@ jobs:
                   push_translations: false
                   skip_untranslated_strings: true
               env:
-                  GITHUB_TOKEN: ${{ secrets.RELEASE_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
                   CROWDIN_API_TOKEN: ${{ secrets.CROWDIN_API_TOKEN }}
             - name: Make JSON from PO Files
               run: npm run make-json
             - name: Build Plugin File
               run: npm run dist
-            - name: Create connector.zip alias
-              run: cp dist/grootmade-connector.zip dist/connector.zip
-            - name: Get Version
-              id: version
-              run: |
-                  VERSION=$(node -p "require('./package.json').version")
-                  MAJOR=$(echo "$VERSION" | cut -d. -f1)
-                  VERSION_TAG="${MAJOR}.x-stable"
-                  echo "version=${VERSION}" >> $GITHUB_OUTPUT
-                  echo "version_tag=${VERSION_TAG}" >> $GITHUB_OUTPUT
-            - name: Create GitHub Release
-              uses: softprops/action-gh-release@v1
-              with:
-                  tag_name: ${{ steps.version.outputs.version_tag }}
-                  name: Release ${{ steps.version.outputs.version_tag }}
-                  body: |
-                      Stable release automatically generated from main branch.
-
-                      **Download:** [grootmade-connector.zip](https://github.com/${{ env.TARGET_REPOSITORY }}/releases/download/${{ steps.version.outputs.version_tag }}/grootmade-connector.zip)
-                  files: dist/grootmade-connector.zip
-                  draft: false
-                  prerelease: false
-                  overwrite: true
-              env:
-                  GITHUB_TOKEN: ${{ secrets.RELEASE_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
-            - name: Update latest-stable tag and release
-              run: |
-                  git config user.name "github-actions[bot]"
-                  git config user.email "github-actions[bot]@users.noreply.github.com"
-                  git remote set-url origin https://x-access-token:${{ secrets.RELEASE_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
-                  git fetch --tags
-                  git tag -d latest-stable 2>/dev/null || true
-                  git push origin :refs/tags/latest-stable 2>/dev/null || true
-                  git tag latest-stable ${{ steps.version.outputs.version_tag }}
-                  git push origin latest-stable --force
-              env:
-                  GITHUB_TOKEN: ${{ secrets.RELEASE_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
-            - name: Verify release file exists
-              run: |
-                  if [ ! -f "dist/grootmade-connector.zip" ]; then
-                    echo "Error: dist/grootmade-connector.zip not found!"
-                    ls -la dist/ || echo "dist directory does not exist"
-                    exit 1
-                  fi
-                  echo "Release file exists: $(ls -lh dist/grootmade-connector.zip)"
-            - name: Create/Update latest-stable Release
-              uses: softprops/action-gh-release@v1
-              with:
-                  tag_name: latest-stable
-                  name: Latest Stable Release
-                  body: |
-                      Latest stable release - always points to the most recent stable version.
-
-                      **Download:** [grootmade-connector.zip](https://github.com/${{ env.TARGET_REPOSITORY }}/releases/download/latest-stable/grootmade-connector.zip)
-                  files: dist/grootmade-connector.zip
-                  draft: false
-                  prerelease: false
-                  overwrite: true
-              env:
-                  GITHUB_TOKEN: ${{ secrets.RELEASE_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
-            - name: Update latest tag
-              run: |
-                  git config user.name "github-actions[bot]"
-                  git config user.email "github-actions[bot]@users.noreply.github.com"
-                  git remote set-url origin https://x-access-token:${{ secrets.RELEASE_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
-                  git fetch --tags
-                  git tag -d latest 2>/dev/null || true
-                  git push origin :refs/tags/latest 2>/dev/null || true
-                  git tag latest ${{ steps.version.outputs.version_tag }}
-                  git push origin latest --force
-              env:
-                  GITHUB_TOKEN: ${{ secrets.RELEASE_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
-            - name: Verify connector.zip exists
-              run: |
-                  if [ ! -f "dist/connector.zip" ]; then
-                    echo "Error: dist/connector.zip not found!"
-                    exit 1
-                  fi
-                  echo "connector.zip exists: $(ls -lh dist/connector.zip)"
-            - name: Create/Update latest Release
-              uses: softprops/action-gh-release@v1
-              with:
-                  tag_name: latest
-                  name: Latest Release
-                  body: |
-                      Latest stable release - always points to the most recent stable version.
-
-                      **Downloads:**
-                      - [grootmade-connector.zip](https://github.com/${{ env.TARGET_REPOSITORY }}/releases/download/latest/grootmade-connector.zip)
-                      - [connector.zip](https://github.com/${{ env.TARGET_REPOSITORY }}/releases/download/latest/connector.zip)
-                  files: |
-                      dist/grootmade-connector.zip
-                      dist/connector.zip
-                  draft: false
-                  prerelease: false
-                  overwrite: true
-              env:
-                  GITHUB_TOKEN: ${{ secrets.RELEASE_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
-            - name: Release ZIP to Branch
+            - name: Release ZIP
               uses: s0/git-publish-subdir-action@develop
               env:
                   REPO: self
                   BRANCH: ${{ env.RELEASE_BRANCH }}
                   FOLDER: dist
                   SQUASH_HISTORY: true
-                  GITHUB_TOKEN: ${{ secrets.RELEASE_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
