@@ -2,7 +2,7 @@
 
 namespace GrootMade\Connector\api;
 
-use GrootMade\Connector\Connector\Connector\Connector\Connector\Connector\Connector\Connector\Connector\Connector\\Connector\\Connector\Connector\Helper;
+use GrootMade\Connector\Helper;
 
 class License extends ApiBase
 {

@@ -3,7 +3,7 @@
  * Plugin Name: GrootMade Connector
  * Plugin URI: https://grootmade.com
  * Description: GrootMade Connector plugin for WordPress.
- * Version: 1.0.1768918276
+ * Version: 1.0.1768919098
  * Requires at Least: 6.0
  * Requires PHP: 7.4
  * Author: GrootMade
