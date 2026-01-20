@@ -11,6 +11,8 @@ jobs:
     deploy:
         name: Release
         runs-on: ubuntu-latest
+        permissions:
+            contents: write
         steps:
             - name: Checkout repository
               uses: actions/checkout@v4
@@ -60,7 +62,38 @@ jobs:
               run: npm run make-json
             - name: Build Plugin File
               run: npm run dist
-            - name: Release ZIP
+            - name: Create connector.zip alias
+              run: |
+                  if [ -f "dist/grootmade-connector.zip" ]; then
+                    cp dist/grootmade-connector.zip dist/connector.zip
+                    echo "Created connector.zip"
+                  else
+                    echo "Error: grootmade-connector.zip not found"
+                    exit 1
+                  fi
+            - name: Get Version
+              id: version
+              run: |
+                  VERSION=$(node -p "require('./package.json').version")
+                  TAG="${VERSION}-stable"
+                  echo "version=${VERSION}" >> $GITHUB_OUTPUT
+                  echo "tag=${TAG}" >> $GITHUB_OUTPUT
+            - name: Create GitHub Release
+              uses: softprops/action-gh-release@v1
+              with:
+                  tag_name: ${{ steps.version.outputs.tag }}
+                  name: Release ${{ steps.version.outputs.tag }}
+                  body: |
+                      Stable release automatically generated from main branch.
+                  files: |
+                      dist/grootmade-connector.zip
+                      dist/connector.zip
+                  draft: false
+                  prerelease: false
+                  overwrite: true
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            - name: Release ZIP to Branch
               uses: s0/git-publish-subdir-action@develop
               env:
                   REPO: self
