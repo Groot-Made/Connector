@@ -1,6 +1,6 @@
 <?php
 
-namespace GrootMade\Connector\api;
+namespace GrootMade\\Connector\api;
 
 class Announcement extends ApiBase
 {

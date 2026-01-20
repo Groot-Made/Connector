@@ -1,5 +1,5 @@
 <?php
-namespace GrootMade\Connector\exceptions;
+namespace GrootMade\\Connector\exceptions;
 class ItemDownloadDetailException extends \Exception
 {
 	private $item_id;

@@ -1,8 +1,8 @@
 <?php
 
-namespace GrootMade\Connector;
+namespace GrootMade\\Connector;
 
-use GrootMade\Connector\api\{
+use GrootMade\\Connector\\Connector\Connector\api\{
 	Announcement,
 	ApiBase,
 	Collection,

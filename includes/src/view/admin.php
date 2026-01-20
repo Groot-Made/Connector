@@ -1,5 +1,5 @@
 <?php
-namespace GrootMade\Connector\view;
+namespace GrootMade\\Connector\view;
 
 if (!defined('ABSPATH')) {
 	exit(); // Exit if accessed directly.
@@ -24,6 +24,7 @@ if (!defined('ABSPATH')) {
 </body>
 
 </html>
+
 
 
 

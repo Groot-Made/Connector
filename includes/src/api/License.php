@@ -1,9 +1,9 @@
 <?php
 
-namespace GrootMade\Connector\api;
+namespace GrootMade\\Connector\api;
 
-use GrootMade\Connector\Constants;
-use GrootMade\Connector\Helper;
+use GrootMade\\Connector\\Connector\\Connector\\Connector\Connector\Constants;
+use GrootMade\\Connector\\Connector\\Connector\\Connector\Connector\Helper;
 
 class License extends ApiBase
 {

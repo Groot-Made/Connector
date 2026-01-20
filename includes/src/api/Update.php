@@ -1,8 +1,8 @@
 <?php
 
-namespace GrootMade\Connector\api;
+namespace GrootMade\\Connector\api;
 
-use GrootMade\Connector\{Constants, Helper};
+use GrootMade\\Connector\\Connector\Connector\{Constants, Helper};
 
 class Update extends ApiBase
 {

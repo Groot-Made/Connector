@@ -1,8 +1,12 @@
 <?php
 
-namespace GrootMade\Connector\api;
+namespace GrootMade\\Connector\api;
 
-use GrootMade\Connector\{Constants, Helper, Installer};
+use GrootMade\\Connector\\Connector\\Connector\\Connector\Connector\{
+	Constants,
+	Helper,
+	Installer
+};
 
 class Item extends ApiBase
 {
